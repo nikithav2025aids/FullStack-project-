@@ -1,32 +1,50 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
-  const [formData, setFormData] = useState({ Username: "", Password: "" });
+  //const[email, setEmail] = useState("")
+  //const[pass, setPass] = useState("")
+  const navigate = useNavigate();
+  const[formdata, setFormdata] = useState({
+    username:"",
+    password:""
+  })
 
-  function handleChange(e) {
-    setFormData({ ...formData, 
-        [e.target.name]: e.target.value });
-  }
-
-  function handleSubmit(e) {
+  function handlechange(e){
     e.preventDefault();
-    console.log(formData);
+    setFormdata({
+      ...formdata,
+      [e.target.name]:e.target.value
+    })
   }
 
-  return (
+  const handlesubmit = (event)=>{
+    event.preventDefault();
+    console.log("login page",formdata)
+    alert("Login sucessfull")
+    navigate("/dashboard",{
+      state:formdata
+    })
+  }
+    return ( 
     <>
-      <div>Hi</div>
-      <form onSubmit={handleSubmit}>
-        Email:
-        <input type="email" name="Username" placeholder="Enter your email" onChange={handleChange}/>
-        <br/>
-        Password:
-        <input type="password" name="Password" placeholder="Enter your password" onChange={handleChange}/>
-        <br/>
-        <button type="submit">Submit!</button>
+      <div>Login</div>
+      {/*}
+      <input type="email" required placeholder="Enter your email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+      <input type="password" required placeholder="Enter your password" value={pass} onChange={(e)=>{setPass(e.target.value)} }/>
+      <button type="submit" onClick={()=>console.log(email,pass)}>Submit</button>
+      <button type="submit" onClick={()=>print()}>Submit</button>
+      */}
+      
+      <form onSubmit={handlesubmit}>
+        <input type="text" required placeholder="Enter your Username" name="username" value={formdata.username} onChange={handlechange}/>
+        <input type="password" required placeholder="Enter your Password" name="password" onChange={handlechange }/>
+        <button type="submit" >Submit</button>
       </form>
     </>
-  );
+    
+     );
 }
 
-export default Login;
+export default Login; 

@@ -1,50 +1,89 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Login() {
-  //const[email, setEmail] = useState("")
-  //const[pass, setPass] = useState("")
-  const navigate = useNavigate();
-  const[formdata, setFormdata] = useState({
-    username:"",
-    password:""
-  })
+    const location = useLocation();
 
-  function handlechange(e){
-    e.preventDefault();
-    setFormdata({
-      ...formdata,
-      [e.target.name]:e.target.value
-    })
-  }
+    const [logindata, setLogindata] = useState({
+        username: "",
+        password: ""
+    });
 
-  const handlesubmit = (event)=>{
-    event.preventDefault();
-    console.log("login page",formdata)
-    alert("Login sucessfull")
-    navigate("/dashboard",{
-      state:formdata
-    })
-  }
-    return ( 
-    <>
-      <div>Login</div>
-      {/*}
-      <input type="email" required placeholder="Enter your email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-      <input type="password" required placeholder="Enter your password" value={pass} onChange={(e)=>{setPass(e.target.value)} }/>
-      <button type="submit" onClick={()=>console.log(email,pass)}>Submit</button>
-      <button type="submit" onClick={()=>print()}>Submit</button>
-      */}
-      
-      <form onSubmit={handlesubmit}>
-        <input type="text" required placeholder="Enter your Username" name="username" value={formdata.username} onChange={handlechange}/>
-        <input type="password" required placeholder="Enter your Password" name="password" onChange={handlechange }/>
-        <button type="submit" >Submit</button>
-      </form>
-    </>
-    
-     );
+    const navigate = useNavigate();
+
+    function handlechange(e) {
+        setLogindata({
+            ...logindata,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    const formsubmit = (e) => {
+        e.preventDefault();
+
+        const registerdata = location.state;
+
+        console.log("Login data", logindata);
+        console.log("Register data", registerdata);
+
+        if (registerdata && logindata.username === registerdata.name && logindata.password === registerdata.password) {
+            console.log("Login success");
+            navigate("/dashboard", {
+                state: logindata
+            });
+        } else {
+            alert("Invalid credentials");
+        }
+    };
+
+    return (
+        <div className="min-h-screen flex justify-center items-center bg-green-300 p-4">
+
+            <form onSubmit={formsubmit} className="w-full max-w-md bg-green-200 p-8 rounded-xl shadow-xl">
+
+                <h2 className="text-3xl font-bold text-center mb-8 text-black">
+                    Welcome Back
+                </h2>
+
+                <div className="mb-5">
+                    <label htmlFor="username" className="block mb-2 text-black font-semibold">
+                        Username
+                    </label>
+                    <input
+                        id="username"
+                        type="text"
+                        placeholder="Enter your username"
+                        required
+                        name="username"
+                        value={logindata.username}
+                        onChange={handlechange}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    />
+                </div>
+
+                <div className="mb-6">
+                    <label htmlFor="password" className="block mb-2 text-black font-semibold">
+                        Password
+                    </label>
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Enter your password"
+                        required
+                        name="password"
+                        value={logindata.password}
+                        onChange={handlechange}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    />
+                </div>
+
+                <button type="submit" className="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition duration-300">
+                    Login
+                </button>
+
+            </form>
+        </div>
+    );
 }
 
-export default Login; 
+export default Login;

@@ -41,8 +41,8 @@ function Login() {
 
             <form onSubmit={formsubmit} className="w-full max-w-md bg-green-200 p-8 rounded-xl shadow-xl">
 
-                <h2 className="text-3xl font-bold text-center mb-8 text-black">
-                    Welcome Back
+                <h2 className="text-xl font-bold text-center mb-8 text-black">
+                    Welcome Back,Good to see you!!
                 </h2>
 
                 <div className="mb-5">

@@ -1,6 +1,6 @@
 function Calender() {
   return (
-    <div>Calender</div>
+    <div>CalenderPage</div>
   );
 }
 
